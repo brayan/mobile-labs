@@ -16,12 +16,20 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
 
+        private lateinit var database: AppDatabase
+
         fun getInstance(context: Context): AppDatabase {
-            return Room.databaseBuilder(
+            if (::database.isInitialized) {
+                return database
+            }
+
+            database = Room.databaseBuilder(
                 context,
                 AppDatabase::class.java,
                 NOME_BANCO_DE_DADOS
             ).build()
+
+            return database
         }
 
     }
