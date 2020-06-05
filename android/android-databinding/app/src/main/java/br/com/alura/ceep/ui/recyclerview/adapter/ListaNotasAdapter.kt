@@ -8,14 +8,20 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleRegistry
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import br.com.alura.ceep.BR
 import br.com.alura.ceep.R
+import br.com.alura.ceep.databinding.ItemNotaBinding
 import br.com.alura.ceep.model.Nota
+import br.com.alura.ceep.ui.databinding.NotaData
 import br.com.alura.ceep.ui.extensions.carregaImagem
 import kotlinx.android.synthetic.main.item_nota.view.*
 
@@ -26,8 +32,10 @@ class ListaNotasAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(context)
-        val viewDataBiding = DataBindingUtil.inflate<ViewDataBinding>(inflater, R.layout.item_nota, parent, false)
-        return ViewHolder(viewDataBiding)
+        val viewDataBiding = ItemNotaBinding.inflate(inflater, parent, false)
+        return ViewHolder(viewDataBiding).also {
+            viewDataBiding.lifecycleOwner = it
+        }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -36,43 +44,46 @@ class ListaNotasAdapter(
         }
     }
 
-    inner class ViewHolder(private val viewDataBinding: ViewDataBinding) : RecyclerView.ViewHolder(viewDataBinding.root) {
+    override fun onViewAttachedToWindow(holder: ViewHolder) {
+        super.onViewAttachedToWindow(holder)
+        holder.markAsActive()
+    }
+
+    override fun onViewDetachedFromWindow(holder: ViewHolder) {
+        super.onViewDetachedFromWindow(holder)
+        holder.markAsUnactive()
+    }
+
+    inner class ViewHolder(private val viewDataBinding: ItemNotaBinding) : RecyclerView.ViewHolder(viewDataBinding.root), LifecycleOwner {
 
         private lateinit var nota: Nota
 
-        private val campoDescricao: TextView by lazy {
-            itemView.item_nota_descricao
-        }
-        private val campoFavorita: ImageView by lazy {
-            itemView.item_nota_favorita
-        }
-        private val campoImagem: ImageView by lazy {
-            itemView.item_nota_imagem
-        }
+        private val registry = LifecycleRegistry(this)
 
         init {
-            itemView.setOnClickListener {
-                if (::nota.isInitialized) {
-                    onItemClickListener(nota)
-                }
+            viewDataBinding.listener = this
+            registry.markState(Lifecycle.State.INITIALIZED)
+        }
+
+        fun onClickNote() {
+            if (::nota.isInitialized) {
+                onItemClickListener(nota)
             }
         }
 
         fun vincula(nota: Nota) {
             this.nota = nota
-            viewDataBinding.setVariable(BR.nota, nota)
-            campoDescricao.text = nota.descricao
-            if (this.nota.favorita) {
-                campoFavorita.visibility = VISIBLE
-            } else {
-                campoFavorita.visibility = GONE
-            }
-            campoImagem.carregaImagem(nota.imagemUrl)
-            if (nota.imagemUrl.isEmpty()) {
-                campoImagem.visibility = GONE
-            } else {
-                campoImagem.visibility = VISIBLE
-            }
+            viewDataBinding.nota = NotaData(nota)
+        }
+
+        override fun getLifecycle() = registry
+
+        fun markAsActive() {
+            registry.markState(Lifecycle.State.STARTED)
+        }
+
+        fun markAsUnactive() {
+            registry.markState(Lifecycle.State.DESTROYED)
         }
 
     }

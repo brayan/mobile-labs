@@ -24,9 +24,6 @@ class MainActivity : AppCompatActivity() {
             configuraComponentesVisuais()
         }
 
-        WhatsAppUtils.startChat(this, phoneNumber = "555139214004", message = "adsf") {
-            Log.e("WHATSSSS", it.message, it)
-        }
     }
 
     private fun configuraComponentesVisuais() {
