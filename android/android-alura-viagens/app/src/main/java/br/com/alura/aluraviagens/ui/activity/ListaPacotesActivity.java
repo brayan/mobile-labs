@@ -22,6 +22,8 @@ public class ListaPacotesActivity extends AppCompatActivity {
 
         setTitle(TITULO_APPBAR);
         configuraLista();
+
+        ResumoPacoteActivity.Companion.start(this);
     }
 
     private void configuraLista() {

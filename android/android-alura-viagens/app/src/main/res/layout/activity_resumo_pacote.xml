@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.ResumoPacoteActivity">
+
+    <ImageView
+        android:id="@+id/ivResumoPacote"
+        android:layout_width="0dp"
+        android:layout_height="140dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:srcCompat="@drawable/sao_paulo_sp" />
+
+    <TextView
+        android:id="@+id/tvResumoPacoteCidade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivResumoPacote"
+        tools:text="São Paulo" />
+
+    <TextView
+        android:id="@+id/tvResumoPacoteDias"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/tvResumoPacoteCidade"
+        app:layout_constraintTop_toBottomOf="@+id/tvResumoPacoteCidade"
+        tools:text="2 dias" />
+
+    <TextView
+        android:id="@+id/tvResumoPacoteDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/tvResumoPacotePreco"
+        app:layout_constraintStart_toStartOf="@+id/tvResumoPacoteDias"
+        app:layout_constraintTop_toBottomOf="@+id/tvResumoPacoteDias"
+        tools:text="08/12 - 10/12 de 2017" />
+
+    <TextView
+        android:id="@+id/tvResumoPacotePreco"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:textAlignment="textEnd"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvResumoPacoteDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvResumoPacoteDate"
+        tools:text="R$ 243,99" />
+
+    <TextView
+        android:id="@+id/tvResumoPacotePrecoLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Preço final:"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvResumoPacotePreco"
+        app:layout_constraintEnd_toEndOf="@+id/tvResumoPacotePreco" />
+
+    <Button
+        android:id="@+id/btResumoPacoteRealizarPagamento"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/button_round_orange"
+        android:text="Realizar pagamento"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivResumoPacote"
+        app:layout_constraintVertical_bias="1.0" />
+</android.support.constraint.ConstraintLayout>
