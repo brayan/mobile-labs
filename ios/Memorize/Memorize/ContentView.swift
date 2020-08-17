@@ -1,6 +1,9 @@
 import SwiftUI
 
 // struct is a container for variables, functions...
+// struct vs class
+// struct: value type, copied when passed or assigned, functional programming
+// class: reference type, passed around via pointers, object-oriented programming
 struct ContentView: View {
     // any type of View
     var body: some View {
