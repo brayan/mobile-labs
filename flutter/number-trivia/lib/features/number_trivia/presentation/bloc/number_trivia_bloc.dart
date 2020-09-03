@@ -10,7 +10,8 @@ import 'package:numbertrivia/features/number_trivia/domain/entities/number_trivi
 import 'package:numbertrivia/features/number_trivia/domain/usecases/get_concrete_number_trivia.dart';
 import 'package:numbertrivia/features/number_trivia/domain/usecases/get_random_number_trivia.dart';
 
-import './bloc.dart';
+import 'number_trivia_event.dart';
+import 'number_trivia_state.dart';
 
 const String SERVER_FAILURE_MESSAGE = "Server Failure";
 const String CACHE_FAILURE_MESSAGE = "Cache Failure";
