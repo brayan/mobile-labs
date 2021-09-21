@@ -30,15 +30,76 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun CoreUiCompose() {
+private fun CoreUiCompose() {
     Surface(
         color = Color.DarkGray,
         modifier = Modifier.fillMaxSize(), // match height and width
     ) {
-        Surface(
-            color = Color.Blue,
-            modifier = Modifier.wrapContentSize(align = Alignment.TopEnd),
+//        PlayingWithColumnsRowsAndTexts()
+        PlayingWithColumnsRowsAndSquares()
+    }
+}
+
+@Composable
+private fun PlayingWithColumnsRowsAndSquares() {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.SpaceEvenly,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
+            ColoredSquare(color = Color.Red)
+            ColoredSquare(color = Color.Magenta)
+        }
+        ColoredSquare(color = Color.Cyan)
+        ColoredSquare(color = Color.Yellow)
+        ColoredSquare(color = Color.Blue)
+    }
+}
+
+@Composable
+private fun PlayingWithColumnsRowsAndTexts() {
+    Surface(
+        color = Color.Blue,
+//            modifier = Modifier.wrapContentSize(align = Alignment.TopStart),
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
+    ) {
+        Column(
+            modifier = Modifier.padding(all = 16.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = "One",
+                    color = Color.White,
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .padding(end = 16.dp),
+                    style = MaterialTheme.typography.body1
+                )
+                Text(
+                    text = "Two",
+                    color = Color.White,
+                    modifier = Modifier.wrapContentSize(),
+                    style = MaterialTheme.typography.body1
+                )
+            }
+            Text(
+                text = "Wrapped content, height and width",
+                color = Color.White,
+                modifier = Modifier.wrapContentSize(),
+                style = MaterialTheme.typography.body1
+            )
             Text(
                 text = "Wrapped content, height and width",
                 color = Color.White,
@@ -50,7 +111,19 @@ fun CoreUiCompose() {
 }
 
 @Composable
-fun BasicMainActivityCompose(context: Context) {
+private fun ColoredSquare(color: Color) {
+    Surface(
+        color = color,
+        modifier = Modifier
+            .height(100.dp)
+            .width(100.dp)
+    ) {
+
+    }
+}
+
+@Composable
+private fun BasicMainActivityCompose(context: Context) {
     UdemyjetpackcomposeTheme {
         Surface(color = MaterialTheme.colors.background) {
             GreetingText("Android")
@@ -62,7 +135,7 @@ fun BasicMainActivityCompose(context: Context) {
 }
 
 @Composable
-fun GreetingText(name: String) {
+private fun GreetingText(name: String) {
     Text(
         text = "Hello, $name!",
         modifier = Modifier
@@ -86,7 +159,7 @@ fun GreetingText(name: String) {
 }
 
 @Composable
-fun GreetingButton(name: String, onClick: () -> Unit) {
+private fun GreetingButton(name: String, onClick: () -> Unit) {
     Button(onClick = onClick) {
         GreetingText(name = "Click-me, $name!!")
         GreetingText(name = "Hello!")
@@ -95,6 +168,6 @@ fun GreetingButton(name: String, onClick: () -> Unit) {
 
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreviewMainActivity() {
+private fun DefaultPreviewMainActivity() {
     CoreUiCompose()
 }
