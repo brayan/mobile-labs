@@ -5,25 +5,105 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import br.com.sailboat.udemy_jetpack_compose.ui.theme.UdemyjetpackcomposeTheme
+import br.com.sailboat.udemy_jetpack_compose.ui.theme.LightGreen
+import br.com.sailboat.udemy_jetpack_compose.ui.theme.MainTheme
+import br.com.sailboat.udemy_jetpack_compose.viewmodel.MainViewAction
+import br.com.sailboat.udemy_jetpack_compose.viewmodel.MainViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MainDynamicContentCompose()
+            MainTheme {
+                MainProfileScreen()
+            }
         }
+    }
+}
+
+@Composable
+private fun MainProfileScreen() {
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        ProfileCard()
+    }
+}
+
+@Composable
+private fun ProfileCard() {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight(align = Alignment.Top)
+            .padding(16.dp),
+        elevation = 8.dp,
+        backgroundColor = Color.White,
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start,
+        ) {
+            ProfilePicture()
+            ProfileContent()
+        }
+    }
+}
+
+@Composable
+private fun ProfilePicture() {
+    Card(
+        shape = CircleShape,
+        border = BorderStroke(width = 2.dp, color = MaterialTheme.colors.LightGreen),
+        modifier = Modifier.padding(16.dp),
+        elevation = 4.dp,
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.profile_picture_sample),
+            contentDescription = "Content description",
+            modifier = Modifier.size(72.dp),
+            contentScale = ContentScale.Crop,
+        )
+    }
+}
+
+@Composable
+private fun ProfileContent() {
+    Column(
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth()
+            .wrapContentHeight()
+    ) {
+        Text(
+            text = "John Doe",
+            style = MaterialTheme.typography.h5,
+        )
+//        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+            Text(
+                text = "Active now",
+                style = MaterialTheme.typography.body2,
+                color = Color.Black.copy(alpha = 0.6f),
+//                fontWeight = FontWeight.Bold
+            )
+//        }
     }
 }
 
@@ -160,7 +240,7 @@ private fun ColoredSquare(color: Color) {
 
 @Composable
 private fun BasicMainActivityCompose(context: Context) {
-    UdemyjetpackcomposeTheme {
+    MainTheme {
         Surface(color = MaterialTheme.colors.background) {
             GreetingText("Android")
             GreetingButton("Android", onClick = {
@@ -205,5 +285,7 @@ private fun GreetingButton(name: String, onClick: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 private fun DefaultPreviewMainActivity() {
-    MainDynamicContentCompose()
+    MainTheme {
+        MainProfileScreen()
+    }
 }
