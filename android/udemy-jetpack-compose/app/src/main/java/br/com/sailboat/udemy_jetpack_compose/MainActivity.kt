@@ -9,6 +9,8 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -19,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,6 +28,8 @@ import br.com.sailboat.udemy_jetpack_compose.ui.theme.LightGreen
 import br.com.sailboat.udemy_jetpack_compose.ui.theme.MainTheme
 import br.com.sailboat.udemy_jetpack_compose.viewmodel.MainViewAction
 import br.com.sailboat.udemy_jetpack_compose.viewmodel.MainViewModel
+import coil.compose.rememberImagePainter
+import coil.transform.CircleCropTransformation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,8 +52,8 @@ private fun MainProfileScreen(viewModel: MainViewModel = MainViewModel()) {
 
             viewModel.dispatchViewAction(MainViewAction.OnStartMainProfile)
 
-            Column {
-                users.value?.map {
+            LazyColumn {
+                items(users.value.orEmpty()) {
                     ProfileCard(it)
                 }
             }
@@ -87,14 +90,14 @@ private fun ProfileCard(userProfile: UserProfile) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start,
         ) {
-            ProfilePicture(userProfile.drawableId, userProfile.status)
+            ProfilePicture(userProfile.imageUrl, userProfile.status)
             ProfileContent(userProfile.name, userProfile.status)
         }
     }
 }
 
 @Composable
-private fun ProfilePicture(drawableId: Int, isStatusOnline: Boolean) {
+private fun ProfilePicture(imageUrl: String, isStatusOnline: Boolean) {
     Card(
         shape = CircleShape,
         border = BorderStroke(
@@ -105,7 +108,12 @@ private fun ProfilePicture(drawableId: Int, isStatusOnline: Boolean) {
         elevation = 4.dp,
     ) {
         Image(
-            painter = painterResource(id = drawableId),
+            painter = rememberImagePainter(
+                data = imageUrl,
+                builder = {
+                    transformations(CircleCropTransformation())
+                },
+            ),
             contentDescription = "Content description",
             modifier = Modifier.size(72.dp),
             contentScale = ContentScale.Crop,

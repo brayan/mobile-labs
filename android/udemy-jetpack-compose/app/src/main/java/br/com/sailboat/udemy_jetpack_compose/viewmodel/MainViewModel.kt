@@ -3,6 +3,7 @@ package br.com.sailboat.udemy_jetpack_compose.viewmodel
 import androidx.lifecycle.ViewModel
 import br.com.sailboat.udemy_jetpack_compose.R
 import br.com.sailboat.udemy_jetpack_compose.UserProfile
+import br.com.sailboat.udemy_jetpack_compose.UserProfileFactory
 
 class MainViewModel : ViewModel() {
 
@@ -20,19 +21,7 @@ class MainViewModel : ViewModel() {
     }
 
     private fun onStartMainProfile() {
-        val users = listOf(
-            UserProfile(
-                name = "John Doe",
-                status = true,
-                drawableId = R.drawable.profile_picture_sample,
-            ),
-            UserProfile(
-                name = "John Doe 2",
-                status = false,
-                drawableId = R.drawable.profile_picture_sample,
-            )
-        )
-        viewState.users.value = users
+        viewState.users.value = UserProfileFactory.makeList()
     }
 
 }
