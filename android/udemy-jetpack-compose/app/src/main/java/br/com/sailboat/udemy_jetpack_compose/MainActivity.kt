@@ -11,6 +11,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -38,21 +40,45 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun MainProfileScreen() {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-    ) {
-        ProfileCard()
+private fun MainProfileScreen(viewModel: MainViewModel = MainViewModel()) {
+    Scaffold(topBar = { AppBar() }) {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            val users = viewModel.viewState.users.observeAsState()
+
+            viewModel.dispatchViewAction(MainViewAction.OnStartMainProfile)
+
+            Column {
+                users.value?.map {
+                    ProfileCard(it)
+                }
+            }
+        }
     }
 }
 
 @Composable
-private fun ProfileCard() {
+private fun AppBar() {
+    TopAppBar(
+        navigationIcon = {
+            Icon(
+                Icons.Default.Home,
+                "Home icon",
+                Modifier.padding(horizontal = 12.dp),
+            )
+        },
+        title = { Text(text = "Udemy Course") },
+    )
+}
+
+@Composable
+private fun ProfileCard(userProfile: UserProfile) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight(align = Alignment.Top)
-            .padding(16.dp),
+            .padding(top = 8.dp, bottom = 4.dp, start = 16.dp, end = 16.dp),
         elevation = 8.dp,
         backgroundColor = Color.White,
     ) {
@@ -61,22 +87,25 @@ private fun ProfileCard() {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start,
         ) {
-            ProfilePicture()
-            ProfileContent()
+            ProfilePicture(userProfile.drawableId, userProfile.status)
+            ProfileContent(userProfile.name, userProfile.status)
         }
     }
 }
 
 @Composable
-private fun ProfilePicture() {
+private fun ProfilePicture(drawableId: Int, isStatusOnline: Boolean) {
     Card(
         shape = CircleShape,
-        border = BorderStroke(width = 2.dp, color = MaterialTheme.colors.LightGreen),
+        border = BorderStroke(
+            width = 2.dp,
+            color = if (isStatusOnline) MaterialTheme.colors.LightGreen else Color.Red
+        ),
         modifier = Modifier.padding(16.dp),
         elevation = 4.dp,
     ) {
         Image(
-            painter = painterResource(id = R.drawable.profile_picture_sample),
+            painter = painterResource(id = drawableId),
             contentDescription = "Content description",
             modifier = Modifier.size(72.dp),
             contentScale = ContentScale.Crop,
@@ -85,7 +114,7 @@ private fun ProfilePicture() {
 }
 
 @Composable
-private fun ProfileContent() {
+private fun ProfileContent(userName: String, isStatusOnline: Boolean) {
     Column(
         modifier = Modifier
             .padding(8.dp)
@@ -93,12 +122,12 @@ private fun ProfileContent() {
             .wrapContentHeight()
     ) {
         Text(
-            text = "John Doe",
+            text = userName,
             style = MaterialTheme.typography.h5,
         )
 //        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             Text(
-                text = "Active now",
+                text = if (isStatusOnline) "Active now" else "Offline",
                 style = MaterialTheme.typography.body2,
                 color = Color.Black.copy(alpha = 0.6f),
 //                fontWeight = FontWeight.Bold
