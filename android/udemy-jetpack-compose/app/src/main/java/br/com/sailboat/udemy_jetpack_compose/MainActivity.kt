@@ -23,7 +23,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import br.com.sailboat.udemy_jetpack_compose.ui.theme.LightGreen
 import br.com.sailboat.udemy_jetpack_compose.ui.theme.MainTheme
 import br.com.sailboat.udemy_jetpack_compose.viewmodel.MainViewAction
@@ -36,14 +41,34 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MainTheme {
-                MainProfileScreen()
+                UsersApplication()
             }
         }
     }
 }
 
 @Composable
-private fun MainProfileScreen(viewModel: MainViewModel = MainViewModel()) {
+fun UsersApplication() {
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = "users_list") {
+        composable("users_list") {
+            UserListScreen(navHostController = navController)
+        }
+        composable("user_details") {
+            val viewModel = MainViewModel()
+            val users = viewModel.viewState.users.observeAsState()
+
+            viewModel.dispatchViewAction(MainViewAction.OnStartMainProfile)
+
+            users.value?.firstOrNull()?.run {
+                UserProfileDetailsScreen(userProfile = this)
+            }
+        }
+    }
+}
+
+@Composable
+private fun UserListScreen(viewModel: MainViewModel = MainViewModel(), navHostController: NavHostController) {
     Scaffold(topBar = { AppBar() }) {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -54,8 +79,28 @@ private fun MainProfileScreen(viewModel: MainViewModel = MainViewModel()) {
 
             LazyColumn {
                 items(users.value.orEmpty()) {
-                    ProfileCard(it)
+                    ProfileCard(it) {
+                        navHostController.navigate("user_details")
+                    }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun UserProfileDetailsScreen(userProfile: UserProfile) {
+    Scaffold(topBar = { AppBar() }) {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Top,
+            ) {
+                ProfilePicture(userProfile.imageUrl, userProfile.status, 240.dp)
+                ProfileContent(userProfile.name, userProfile.status, Alignment.CenterHorizontally)
             }
         }
     }
@@ -76,12 +121,13 @@ private fun AppBar() {
 }
 
 @Composable
-private fun ProfileCard(userProfile: UserProfile) {
+private fun ProfileCard(userProfile: UserProfile, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight(align = Alignment.Top)
-            .padding(top = 8.dp, bottom = 4.dp, start = 16.dp, end = 16.dp),
+            .padding(top = 8.dp, bottom = 4.dp, start = 16.dp, end = 16.dp)
+            .clickable { onClick.invoke() },
         elevation = 8.dp,
         backgroundColor = Color.White,
     ) {
@@ -90,21 +136,23 @@ private fun ProfileCard(userProfile: UserProfile) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start,
         ) {
-            ProfilePicture(userProfile.imageUrl, userProfile.status)
-            ProfileContent(userProfile.name, userProfile.status)
+            ProfilePicture(userProfile.imageUrl, userProfile.status, 72.dp)
+            ProfileContent(userProfile.name, userProfile.status, Alignment.Start)
         }
     }
 }
 
 @Composable
-private fun ProfilePicture(imageUrl: String, isStatusOnline: Boolean) {
+private fun ProfilePicture(imageUrl: String, isStatusOnline: Boolean, imageSize: Dp) {
     Card(
         shape = CircleShape,
         border = BorderStroke(
             width = 2.dp,
             color = if (isStatusOnline) MaterialTheme.colors.LightGreen else Color.Red
         ),
-        modifier = Modifier.padding(16.dp),
+        modifier = Modifier
+            .padding(16.dp)
+            .size(imageSize),
         elevation = 4.dp,
     ) {
         Image(
@@ -115,19 +163,19 @@ private fun ProfilePicture(imageUrl: String, isStatusOnline: Boolean) {
                 },
             ),
             contentDescription = "Content description",
-            modifier = Modifier.size(72.dp),
             contentScale = ContentScale.Crop,
         )
     }
 }
 
 @Composable
-private fun ProfileContent(userName: String, isStatusOnline: Boolean) {
+private fun ProfileContent(userName: String, isStatusOnline: Boolean, alignment: Alignment.Horizontal) {
     Column(
         modifier = Modifier
             .padding(8.dp)
-            .fillMaxWidth()
-            .wrapContentHeight()
+//            .fillMaxWidth()
+            .wrapContentHeight(),
+        horizontalAlignment = alignment,
     ) {
         Text(
             text = userName,
@@ -321,8 +369,23 @@ private fun GreetingButton(name: String, onClick: () -> Unit) {
 
 @Preview(showBackground = true)
 @Composable
-private fun DefaultPreviewMainActivity() {
+private fun UserProfileDetailsPreview() {
     MainTheme {
-        MainProfileScreen()
+        val viewModel = MainViewModel()
+        val users = viewModel.viewState.users.observeAsState()
+
+        viewModel.dispatchViewAction(MainViewAction.OnStartMainProfile)
+
+        users.value?.firstOrNull()?.run {
+            UserProfileDetailsScreen(this)
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun UserListPreview() {
+    MainTheme {
+//        UserListScreen()
     }
 }
