@@ -1,7 +1,7 @@
 package br.com.sailboat.mobilelabs.android.daggerhilt.impl.di
 
 import br.com.sailboat.mobilelabs.android.daggerhilt.impl.data.repository.MyRepositoryImpl
-import br.com.sailboat.mobilelabs.android.daggerhilt.impl.domain.repository.MyRepository
+import br.com.sailboat.mobilelabs.android.daggerhilt.domain.repository.MyRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

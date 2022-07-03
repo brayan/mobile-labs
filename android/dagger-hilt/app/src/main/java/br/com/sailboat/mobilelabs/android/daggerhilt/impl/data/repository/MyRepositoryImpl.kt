@@ -1,7 +1,7 @@
 package br.com.sailboat.mobilelabs.android.daggerhilt.impl.data.repository
 
 import br.com.sailboat.mobilelabs.android.daggerhilt.impl.data.datasource.remote.MyApi
-import br.com.sailboat.mobilelabs.android.daggerhilt.impl.domain.repository.MyRepository
+import br.com.sailboat.mobilelabs.android.daggerhilt.domain.repository.MyRepository
 import javax.inject.Inject
 
 class MyRepositoryImpl @Inject constructor(
