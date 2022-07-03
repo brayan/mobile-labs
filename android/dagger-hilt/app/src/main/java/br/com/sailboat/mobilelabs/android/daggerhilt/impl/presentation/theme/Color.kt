@@ -1,4 +1,4 @@
-package br.com.sailboat.mobilelabs.android.daggerhilt.ui.theme
+package br.com.sailboat.mobilelabs.android.daggerhilt.impl.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

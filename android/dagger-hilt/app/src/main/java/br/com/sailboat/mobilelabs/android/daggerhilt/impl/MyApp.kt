@@ -1,4 +1,4 @@
-package br.com.sailboat.mobilelabs.android.daggerhilt
+package br.com.sailboat.mobilelabs.android.daggerhilt.impl
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

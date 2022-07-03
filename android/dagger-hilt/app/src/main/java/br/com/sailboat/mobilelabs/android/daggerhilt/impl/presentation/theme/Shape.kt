@@ -1,4 +1,4 @@
-package br.com.sailboat.mobilelabs.android.daggerhilt.ui.theme
+package br.com.sailboat.mobilelabs.android.daggerhilt.impl.presentation.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

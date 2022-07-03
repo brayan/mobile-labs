@@ -1,6 +1,6 @@
-package br.com.sailboat.mobilelabs.android.daggerhilt.di
+package br.com.sailboat.mobilelabs.android.daggerhilt.impl.di
 
-import br.com.sailboat.mobilelabs.android.daggerhilt.data.remote.MyApi
+import br.com.sailboat.mobilelabs.android.daggerhilt.impl.data.datasource.remote.MyApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

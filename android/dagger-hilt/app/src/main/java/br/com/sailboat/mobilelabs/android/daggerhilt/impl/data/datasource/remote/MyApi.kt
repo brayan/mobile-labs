@@ -1,4 +1,4 @@
-package br.com.sailboat.mobilelabs.android.daggerhilt.data.remote
+package br.com.sailboat.mobilelabs.android.daggerhilt.impl.data.datasource.remote
 
 import retrofit2.http.GET
 

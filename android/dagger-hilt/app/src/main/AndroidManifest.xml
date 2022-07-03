@@ -4,7 +4,7 @@
     package="br.com.sailboat.mobilelabs.android.daggerhilt">
 
     <application
-        android:name=".MyApp"
+        android:name=".impl.MyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -15,7 +15,7 @@
         android:theme="@style/Theme.Daggerhilt"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".impl.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Daggerhilt">

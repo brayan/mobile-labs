@@ -1,4 +1,4 @@
-package br.com.sailboat.mobilelabs.android.daggerhilt
+package br.com.sailboat.mobilelabs.android.daggerhilt.impl
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,8 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import br.com.sailboat.mobilelabs.android.daggerhilt.presentation.MyViewModel
-import br.com.sailboat.mobilelabs.android.daggerhilt.ui.theme.DaggerhiltTheme
+import br.com.sailboat.mobilelabs.android.daggerhilt.impl.presentation.MyViewModel
+import br.com.sailboat.mobilelabs.android.daggerhilt.impl.presentation.theme.DaggerhiltTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
