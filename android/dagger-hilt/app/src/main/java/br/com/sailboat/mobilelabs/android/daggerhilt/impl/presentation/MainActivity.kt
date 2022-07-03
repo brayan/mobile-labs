@@ -1,4 +1,4 @@
-package br.com.sailboat.mobilelabs.android.daggerhilt.impl
+package br.com.sailboat.mobilelabs.android.daggerhilt.impl.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

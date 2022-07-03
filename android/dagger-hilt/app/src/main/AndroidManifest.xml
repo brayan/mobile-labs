@@ -15,7 +15,7 @@
         android:theme="@style/Theme.Daggerhilt"
         tools:targetApi="31">
         <activity
-            android:name=".impl.MainActivity"
+            android:name=".impl.presentation.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Daggerhilt">
