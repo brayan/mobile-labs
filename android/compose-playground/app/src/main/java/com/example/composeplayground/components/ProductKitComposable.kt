@@ -12,33 +12,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.composeplayground.R
 import com.example.composeplayground.domain.model.Product
-import com.example.composeplayground.extension.toBrazilianCurrency
+import com.example.composeplayground.ui.theme.Purple200
 import com.example.composeplayground.ui.theme.Purple500
+import com.example.composeplayground.ui.theme.Purple700
 import com.example.composeplayground.ui.theme.Teal200
 import java.math.BigDecimal
 
 @Composable
-fun ProductComposable(product: Product, onClick: () -> Unit) {
-    Surface(
-        Modifier.padding(end = 16.dp),
-        shape = RoundedCornerShape(15.dp),
-        elevation = 4.dp,
-    ) {
-        Column(
+fun ProductKitComposable(description: String, onClick: () -> Unit) {
+    Surface(Modifier.padding(16.dp), shape = RoundedCornerShape(15.dp), elevation = 4.dp) {
+        Row(
             Modifier
-                .heightIn(min = 250.dp, max = 300.dp) // min and height
-                .width(200.dp)
+                .fillMaxWidth()
+                .height(200.dp)
                 .background(Color.White)
                 .clickable { onClick() }
         ) {
@@ -47,66 +42,55 @@ fun ProductComposable(product: Product, onClick: () -> Unit) {
             Box(
                 Modifier
                     .background(
-                        brush = Brush.horizontalGradient(
+                        brush = Brush.linearGradient(
                             colors = listOf(
+                                Purple700,
                                 Purple500,
-                                Teal200
+                                Purple200,
                             )
                         )
                     )
-                    .height(imageSize)
-                    .fillMaxWidth()
+                    .width(imageSize)
+                    .fillMaxHeight()
             ) {
                 Image(
-                    painter = painterResource(id = product.image),
+                    painter = painterResource(id = R.drawable.ic_launcher_background),
                     contentDescription = null,
                     Modifier
                         .size(imageSize)
-                        .offset(y = imageOffset)
+                        .offset(x = imageOffset)
                         .clip(CircleShape)
-                        .align(Alignment.BottomCenter),
-                    contentScale = ContentScale.Crop,
+                        .align(Alignment.Center)
+                        .border(BorderStroke(3.dp, Purple200), CircleShape)
                 )
             }
-            Spacer(modifier = Modifier.height(imageOffset))
+            Spacer(modifier = Modifier.width(imageOffset))
             Column(
                 modifier = Modifier.padding(16.dp)
             ) {
                 Text(
-                    text = product.name,
+                    text = description,
                     style = TextStyle(
                         fontSize = 18.sp,
-                        fontWeight = FontWeight(700),
+                        fontWeight = FontWeight(500),
                     ),
                     overflow = TextOverflow.Ellipsis,
-                    maxLines = 2,
+                    maxLines = 6,
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentHeight()
-                )
-                Text(
-                    text = product.price.toBrazilianCurrency(),
-                    style = TextStyle(
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight(400),
-                    ),
-                    modifier = Modifier
-                        .padding(top = 8.dp)
+                        .padding(16.dp)
                 )
             }
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
-private fun ProductComposablePreview() {
-    val product = Product(
-        name = LoremIpsum(50).values.first(),
-        price = BigDecimal("14.99"),
-        image = R.drawable.placeholder,
-    )
-    ProductComposable(product) {
+fun ProductKitComposablePreview() {
+    val description = "Lorem ipsum is placeholder text"
+    ProductKitComposable(description) {
 
     }
 }
