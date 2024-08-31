@@ -1,5 +1,5 @@
-import Goals from './src/screens/Goals';
+import GuessMyNumber from './src/screens/GuessMyNumber';
 
 export default function App() {
-  return <Goals />;
+  return <GuessMyNumber />;
 }
