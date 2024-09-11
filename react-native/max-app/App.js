@@ -1,5 +1,5 @@
-import GuessMyNumber from './src/screens/GuessMyNumber';
+import Meals from './src/screens/Meals';
 
 export default function App() {
-  return <GuessMyNumber />;
+  return <Meals />;
 }
