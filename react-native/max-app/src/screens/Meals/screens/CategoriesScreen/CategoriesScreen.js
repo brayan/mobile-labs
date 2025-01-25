@@ -3,7 +3,7 @@ import { CATEGORIES } from "../../data/dummy-data";
 import CategoryGridTile from "../../components/CategoryGridTile";
 import { useNavigation } from "@react-navigation/native";
 
-export function Categories() {
+export function CategoriesScreen() {
   const navigation = useNavigation();
 
   return (
@@ -22,10 +22,10 @@ function renderCategoryItem(itemData, navigation) {
     <CategoryGridTile
       title={itemData.item.title}
       color={itemData.item.color}
-      onPress={navigateToMealsDetails.bind(this, navigation, itemData.item.id)} />
+      onPress={navigateToCategoryDetails.bind(this, navigation, itemData.item.id)} />
   );
 }
 
-function navigateToMealsDetails(navigation, categoryId) {
-  navigation.navigate("MealsDetails", { categoryId: categoryId });
+function navigateToCategoryDetails(navigation, categoryId) {
+  navigation.navigate("CategoryDetails", { categoryId: categoryId });
 }

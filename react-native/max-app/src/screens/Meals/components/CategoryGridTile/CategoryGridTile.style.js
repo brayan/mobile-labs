@@ -5,8 +5,8 @@ export const styles = StyleSheet.create({
     flex: 1,
     height: 150,
     borderRadius: 8,
-    elevation: 4,
     margin: 16,
+    elevation: 4,
     shadowColor: '#000',
     shadowOpacity: 0.25,
     shadowOffset: {

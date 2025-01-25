@@ -7,7 +7,7 @@ export function CategoryGridTile({ title, color, onPress }) {
 
   return (
     <View style={styles.container}>
-      <Pressable android_ripple={{ color: '#CCC' }} style={({ pressed }) => [styles.button, pressed ? styles.buttonPressed : styles.button]} onPress={onPress}>
+      <Pressable android_ripple={{ color: '#CCC' }} style={({ pressed }) => [styles.button, pressed ? styles.buttonPressed : null]} onPress={onPress}>
         <View style={[styles.content, { backgroundColor: color }]}>
           <Text style={styles.title}>{title}</Text>
         </View>
