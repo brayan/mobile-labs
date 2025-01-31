@@ -6,3 +6,10 @@ export const GuessMyNumberColors = {
   accent500: '#DDB52F',
   white: '#FFFFFF',
 };
+
+export const MealsColors = {
+  primary400: '#E2B497',
+  primary500: '#3F2F25',
+  primary600: '#351401',
+  white: '#FFFFFF',
+};
