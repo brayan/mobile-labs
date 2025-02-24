@@ -4,6 +4,7 @@ import { CATEGORIES, MEALS } from "../../data/dummy-data";
 import MealItem from "../../components/MealItem";
 import { useLayoutEffect } from "react";
 import { styles } from "./CategoryDetailsScreen.style";
+import MealList from "../../components/MealList";
 
 export function CategoryDetailsScreen(/*{ route }*/) {
   const route = useRoute();
@@ -23,19 +24,10 @@ export function CategoryDetailsScreen(/*{ route }*/) {
     });
   }, [categoryId, navigation])
 
-  return (
-    <View style={styles.container}>
-      <Text>Category Details Screen - {categoryId}</Text>
-      <FlatList
-        data={meals}
-        keyExtractor={(item) => item.id}
-        renderItem={(itemData) => renderMealItem(itemData.item, navigation)} />
-    </View>
-  );
+  return <MealList meals={meals} />
 }
 
 function renderMealItem(item, navigation) {
-  // console.log(JSON.stringify(item, null, 2));
   return (
     <MealItem
       meal={item}
